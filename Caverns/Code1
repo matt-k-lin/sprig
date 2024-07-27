@@ -1,0 +1,32 @@
+const health = "m"
+const healthLost = "d"
+const player = "p"
+const stone = "s"
+const background = "b"
+
+onInput("j", () => {
+  slashX = getFirst(player).x + lastXInput
+  slashY = getFirst(player).y
+    if (lastXInput == 1){
+      addSprite(slashX, slashY, rightSlash)
+      } else {
+      addSprite(slashX, slashY, leftSlash)
+    }
+  playTune(slashSFX)
+  setTimeout(() => {
+    if (lastXInput == 1){
+      for (sprite = 0; sprite < getAll(rightSlash).length; sprite++){
+        getAll(rightSlash)[sprite].remove()
+        }
+    } else {
+      for (sprite = 0; sprite < getAll(leftSlash).length; sprite++){
+        getAll(leftSlash)[sprite].remove()
+        }
+           }
+    }, 5)
+  if ((getTile(slashX, slashY)).find(sprite => sprite.type == Axer)){
+    AxerHealth -=1
+    playTune(hurtSFX)
+    if (AxerHealth == 0){
+      getFirst(tiktik).remove()
+      updateCells(20)
