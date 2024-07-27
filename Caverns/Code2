@@ -1,0 +1,211 @@
+const health = "m"
+const healthLost = "d"
+const player = "p"
+const stone = "s"
+const background = "b"
+const screenTransitionTop = "i"
+const screenTransitionLeft = "j"
+const screenTransitionRight = "l"
+const screenTransitionBottom = "k"
+const grass = "g"
+const backgroundGrass = "t"
+const movementY = 2
+const movement = 1
+var lives = 3
+var axerHealth = 20
+
+setLegend(
+  // UI ELEMENTS
+  [healthLost, bitmap `
+................
+................
+................
+................
+................
+................
+DDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDD
+................
+................
+................
+................
+................
+................`],
+  [health, bitmap `
+................
+................
+................
+................
+................
+................
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+................
+................
+................
+................
+................
+................`],
+  [screenTransitionLeft, bitmap `
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............
+LLL.............`],
+  [screenTransitionRight, bitmap `
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL
+.............LLL`],
+  [screenTransitionBottom, bitmap `
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+................
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL`],
+  [background, bitmap `
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL
+LLLLLLLLLLLLLLLL`],
+  [grass, bitmap `
+0000000000000000
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0DDDDDDDDDDDDDD0
+0000000000000000`],
+  [backgroundGrass, bitmap `
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444
+4444444444444444`],
+
+updateHealth()
+
+function ceilingCheck(sprite) {
+  var yPos = sprite.y
+  sprite.y -= movement
+  if (sprite.y == yPos) {
+    return true
+  } else // uh oh move it back
+    sprite.y += movement
+  return false
+}
+
+function groundCheck(sprite) {
+  var yPos = sprite.y
+  sprite.y += movement
+  if (sprite.y == yPos) {
+    return true
+  } else
+    sprite.y -= movement
+  return false
+}
+
+function moveDown(sprite) {
+  setTimeout(() => {
+    while (!(groundCheck(sprite))) {
+      sprite.y += movement;
+    }
+  }, 150);
+}
+
+onInput("j", () => {
+  slashX = getFirst(player).x + lastXInput
+  slashY = getFirst(player).y
+    if (lastXInput == 1){
+      addSprite(slashX, slashY, rightSlash)
+      } else {
+      addSprite(slashX, slashY, leftSlash)
+    }
+  playTune(slashSFX)
+  setTimeout(() => {
+    if (lastXInput == 1){
+      for (sprite = 0; sprite < getAll(rightSlash).length; sprite++){
+        getAll(rightSlash)[sprite].remove()
+        }
+    } else {
+      for (sprite = 0; sprite < getAll(leftSlash).length; sprite++){
+        getAll(leftSlash)[sprite].remove()
+        }
+           }
+    }, 5)
+  if ((getTile(slashX, slashY)).find(sprite => sprite.type == Axer)){
+    AxerHealth -=1
+    playTune(hurtSFX)
+    if (AxerHealth == 0){
+      getFirst(Axer).remove()
+      updateCells(20)
