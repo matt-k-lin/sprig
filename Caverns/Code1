@@ -28,5 +28,5 @@ onInput("j", () => {
     AxerHealth -=1
     playTune(hurtSFX)
     if (AxerHealth == 0){
-      getFirst(tiktik).remove()
+      getFirst(Axer).remove()
       updateCells(20)
