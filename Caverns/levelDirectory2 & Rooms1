@@ -1,0 +1,49 @@
+
+
+var levelsDir = {
+  "R0": [[2, 1, 7], null, null, [1, 12, 2], background, [[axer, [1, 7]]], null, ["J: attack", [0,15]]],
+  "R1": [[0, 10, 7], null, null, null, background, [[lava, [9, 1]]], [[gem, [2, 7], r1gemSave]], ["Navigate the Dark", [2, 11]]],
+  "R2": [[5, 10, 7], [3, 10, 6], null, [0, 12, 2], background, null, null, null],
+  "R3": [null, [7, 13, 3], [2, 1, 6], [4, 2, 1], backgroundClay, [[lava, [8, 3]], [axer, [10, 6]]], null],
+
+setSolids([player, stone, clay, keyGate, gem, fakeWall, black, crate])
+
+setBackground(background)
+
+let level = 0
+const levels = [
+  map `
+ssssssssssssissss
+ssssssss..0.....s
+ss.s..1ss.......s
+s..0..11ssssss..s
+s.....111..0.ss.s
+s....s111......qs
+s....sss1...s..ss
+s.2p.ssss.......s
+sssssssssss..ssss
+ssssssssssskkssss`, // R0: spawn room
+  map `
+sssssssssssiis
+s..0..1...0.ps
+s.....11s....s
+sv...ss111ssss
+ssss11sassssss
+ssss11ssss..0s
+s0rr11sss1...l
+ssrrs2s1111.cl
+sssss.11eeesss
+s.0tt.1e111sss
+s.t...11111sss
+ss..2.1111ssss
+sssss.ssssssss`, // R1: room below spawn room w/ chest
+   map `
+ssssssssssiiis
+s........w...s
+s.....ssssssss
+s....sssssssss
+s...ssssss.s.s
+s.ssssssss...s
+jp...........s
+sss..........s
+ssssssssssskks`, // R2: hub room between clay and stone
