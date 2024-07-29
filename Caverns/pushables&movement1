@@ -1,0 +1,42 @@
+setPushables({
+  [player]: [crate]
+})
+
+// generate masks
+updateHealth()
+addSprite(0,1, currency)
+updateCurrency(0) 
+
+// Jumps are two units, and if we don't check if there are platforms
+// directly above the Knight it will simply move through it.
+function ceilingCheck(sprite) {
+  var yPos = sprite.y
+  sprite.y -= movement // try to move the sprite up
+  if (sprite.y == yPos) { // if moving up didnt work
+    return true
+  } else // uh oh move it back
+    sprite.y += movement
+  return false
+}
+
+// Check if the Knight is currently on a platform.
+function groundCheck(sprite) {
+  var yPos = sprite.y
+  sprite.y += movement // try to move the sprite down
+  if (sprite.y == yPos) {
+    // do nothing because apparently javascript doesnt have pass
+    return true
+  } else
+    sprite.y -= movement // wow the sprite is not currently on the ground! move it back
+  return false
+}
+
+
+// While the Knight is not on the ground, move downwards.
+function moveDown(sprite) {
+  setTimeout(() => {
+    while (!(groundCheck(sprite))) {
+      sprite.y += movement;
+    }
+  }, 200);
+}
