@@ -1,0 +1,40 @@
+let level = 0
+const levels = [
+  map `
+ssssssssssssissss
+ssssssss..0.....s
+ss.s..1ss.......s
+s..0..11ssssss..s
+s.....111..0.ss.s
+s....s111......qs
+s....sss1...s..ss
+s.2p.ssss.....v.s
+sssssssssss..ssss
+ssssssssssskkssss`, // R0: spawn room
+  map `
+sssssssssssiis
+s..0..1...0.ps
+s.....11s....s
+sv...ss111ssss
+ssss11sassssss
+ssss11sass..0s
+s0rr11sss1...l
+ssrr12s1111.cl
+sssss.11eeesss
+s.0tt.1e111sss
+s.t...11111sss
+ss..2.1111ssss
+sssss.ssssssss`, // R1: room below spawn room w/ chest
+   map `
+ssssssssssiiigggg
+sssss..0.w...ggag
+s.ss....gggggg1ag
+s.0ss..gggaa111ag
+ss.ss..g1a11111ag
+j...s.g11111111gg
+jp..s..11111111gg
+ss..0s..ag11111gg
+ss.......1g11g1gg
+sss....2.1gg.gggg
+sss.2rvssssg.gggg
+sssssssssssgkgggg`, // R2: hub room between grass and stone
